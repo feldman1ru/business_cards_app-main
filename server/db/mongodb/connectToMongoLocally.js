@@ -2,15 +2,9 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 
 mongoose
-.connect("mongodb://localhost:27017/ruslan_business_card_app")
-.then(()=> console.log(
-    chalk.magentaBright("connected successfully to mongoDB locally!"
-    )
-)
-)
-.catch(()=> console.log(chalk.redBright.bold(
-    `Mongodb Error:could not to mongodb: ${error}`
-)
-)
-);
+  .connect("mongodb://localhost:27017/david_business_card_app")
+  .then(() => console.log(chalk.magentaBright("connected to MongoDb Locally!")))
+  .catch(error =>
+    console.log(chalk.redBright.bold(`could not connect to mongoDb: ${error}`))
+  );
 

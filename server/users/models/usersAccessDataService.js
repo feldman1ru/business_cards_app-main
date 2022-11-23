@@ -1,50 +1,69 @@
+const User = require("./mongodb/User");
+
 const DB = process.env.DB || "MONGODB";
 
-const register = async normalizedUser => {
+const registerUser = async normalizedUser => {
   if (DB === "MONGODB") {
     try {
-      normalizedUser._id = "123456";
-      //   throw new Error("Opss... i did it again!");
-      return Promise.resolve(normalizedUser);
+      const email = normalizedUser.email
+      const user = await User.findOne({email:email});
+      if(!user){
+        user = new User(normalizedUser);
+        newUser = await user.save();
+        user = newUser;
+        user = _.pick(normalizedUser, ["name", "email", "_id"]);
+        return Promise.resolve(user);
+      }else{
+        throw new Error("User alredy register")
+      }
+
     } catch (error) {
       error.status = 400;
       return Promise.reject(error);
     }
   }
-  return Promise.resolve("register new user not in mongodb");
+  return Promise.resolve("registerUser new user not in mongodb");
 };
 
-const login = async user => {
+const loginUser = async (normalizedUser) => {
+  const email = normalizedUser.email
+  const password = normalizedUser.password
   if (DB === "MONGODB") {
     try {
-      //   throw new Error("Opss... i did it again!");
-      return Promise.resolve("in login");
+      const user = await User.findOne({email:email});
+      if(user.password !== password)
+      return Promise.resolve("Invalid email or password");
     } catch (error) {
       error.status = 400;
       return Promise.reject(error);
     }
   }
-  return Promise.resolve("login user not in mongodb");
+  return Promise.resolve("loginUser user not in mongodb");
 };
 
-const find = async () => {
+const getUsers = async () => {
   if (DB === "MONGODB") {
     try {
-      //   throw new Error("Opss... i did it again!");
-      return Promise.resolve([{ user: "David Yakin" }]);
+      const users = await User.find().exclude("password");
+      
+      return Promise.resolve(users);
     } catch (error) {
       error.status = 404;
       return Promise.reject(error);
     }
   }
-  return Promise.resolve("get users not in mongodb");
+  return Promise.resolve([{}]);
 };
 
-const findOne = async userId => {
+const getUser = async userId => {
   if (DB === "MONGODB") {
     try {
+
+      const user = await User.findById().exclude("password");
       //   throw new Error("Opss... i did it again!");
-      return Promise.resolve(`get user no: ${userId}`);
+      if(!user)
+      throw new Error("Could not find this user in the database");
+      return Promise.resolve(user)
     } catch (error) {
       error.status = 404;
       return Promise.reject(error);
@@ -53,10 +72,10 @@ const findOne = async userId => {
   return Promise.resolve("get user not in mongodb");
 };
 
-const update = async (userId, normalizedUser) => {
+const updateUser = async (userId, normalizedUser) => {
   if (DB === "MONGODB") {
     try {
-      return Promise.resolve(`user no. ${userId} updated!`);
+      return Promise.resolve({ normalizedUser, userId });
     } catch (error) {
       error.status = 400;
       return Promise.reject(error);
@@ -65,7 +84,7 @@ const update = async (userId, normalizedUser) => {
   return Promise.resolve("card update not in mongodb");
 };
 
-const changeIsBizStatus = async userId => {
+const changeUserBusinessStatus = async userId => {
   if (DB === "MONGODB") {
     try {
       return Promise.resolve(`user no. ${userId} change his business status!`);
@@ -77,9 +96,11 @@ const changeIsBizStatus = async userId => {
   return Promise.resolve("card liked not in mongodb");
 };
 
-const remove = async userId => {
+const deleteUser = async userId => {
   if (DB === "MONGODB") {
     try {
+      const user = await User.findByIdAndDelete().exclude("password");
+      if(!user)
       return Promise.resolve(`user no. ${userId} deleted!`);
     } catch (error) {
       error.status = 400;
@@ -89,10 +110,10 @@ const remove = async userId => {
   return Promise.resolve("card deleted not in mongodb");
 };
 
-exports.register = register;
-exports.login = login;
-exports.find = find;
-exports.findOne = findOne;
-exports.update = update;
-exports.changeIsBizStatus = changeIsBizStatus;
-exports.remove = remove;
+exports.registerUser = registerUser;
+exports.loginUser = loginUser;
+exports.getUsers = getUsers;
+exports.getUser = getUser;
+exports.updateUser = updateUser;
+exports.changeUserBusinessStatus = changeUserBusinessStatus;
+exports.deleteUser = deleteUser;
