@@ -1,23 +1,21 @@
 const Card = require("../models/mongodb/Card");
 var _ = require("lodash");
-const handleBadRequest = require("../../utils/handleErrors");
+const {handleBadRequest} = require("../../utils/handleErrors");
 
 const generateBizNumber  = async () =>{
-    const random = _.random(1000000,9000000);
-    const card = await Card.findOne({bizNumber: random});
+   
     try {
-        if(card){
-            return Promise.resolve( card );
-        }else{
-            return random
+      const random = _.random(1000000, 9000000);
+      const card = await Card.findOne({bizNumber: random},{bizNumber: 1, _id: 0 });
 
-        }
-      } catch (error) {
-        error.status = 404;
-        return Promise.reject(error);
+        if (card) return generateBizNumber();
+        return random;
+        } catch (error) {
+       
+        return handleBadRequest("GenerateBizNumber",error);
       }
+};
 
-}
-
+module.exports = generateBizNumber;
 
 

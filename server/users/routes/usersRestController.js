@@ -1,5 +1,6 @@
 const express = require("express");
 const { handleError } = require("../../utils/handleErrors");
+const { genereteUserPassword } = require("../helpers/bcrypt");
 const normalizeUser = require("../helpers/normalizeUser");
 const {
   registerUser,
@@ -26,6 +27,8 @@ router.post("/", async (req, res) => {
       return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
 
     user = normalizeUser(user);
+    user.password = genereteUserPassword(user.password);
+
     user = await registerUser(user);
     return res.status(201).send(user);
   } catch (error) {
@@ -40,8 +43,8 @@ router.post("/login", async (req, res) => {
     if (error)
       return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
 
-    user = await loginUser(req.body);
-    return res.send(user);
+    const token = await loginUser(req.body);
+    return res.send(token);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
   }

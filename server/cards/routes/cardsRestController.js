@@ -79,7 +79,7 @@ router.patch("/:id", async (req, res) => {
   try {
     const cardId = req.params.id;
     const user = { _id: "6376667871c9c1d0b30481f7" };
-    const card = await likeCard(cardId, user);
+    const card = await likeCard(cardId, user._id);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
@@ -90,7 +90,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const cardId = req.params.id;
     const user = { _id: "6376667871c9c1d0b30481f7" };
-    const card = await deleteCard(cardId, user);
+    const card = await deleteCard(cardId, user._id);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
