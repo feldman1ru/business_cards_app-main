@@ -4,9 +4,10 @@
   "description": "Business cards app with MERN",
   "main": "server.js",
   "scripts": {
-    "start": "node .",
+    "start": "set NODE_ENV=production&& nodemon .",
     "test": "node test.js",
-    "dev": "nodemon ."
+    "dev": "set NODE_ENV=development&& nodemon .",
+    "default": "set NODE_ENV=default&& nodemon ."
   },
   "author": "Ruslan ",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "joi": "^17.7.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.7.2",
     "morgan": "^1.10.0"

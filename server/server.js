@@ -7,6 +7,9 @@ const cors = require("./middlewares/cors");
 const logger = require("./logger/loggerService");
 const connectToDB = require("./db/dbService");
 const config = require("config");
+const {generateInitialCards, generateInitialUsers} = require("./initialData/initialDataService")
+const { required } = require("joi");
+
 
 app.use(cors);
 app.use(logger);
@@ -22,5 +25,7 @@ const PORT = config.get ("PORT");
 app.listen(PORT, () =>
   {console.log(chalk.magentaBright(`Listening on: http://localhost:${PORT}`))
 connectToDB();
+generateInitialCards();
+generateInitialUsers();
 }
 );

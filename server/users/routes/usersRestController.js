@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../../auth/authServise");
 const { handleError } = require("../../utils/handleErrors");
 const { genereteUserPassword } = require("../helpers/bcrypt");
 const normalizeUser = require("../helpers/normalizeUser");
@@ -18,6 +19,7 @@ const {
   validateUserUpdate,
 } = require("../validations/userValidationService");
 const router = express.Router();
+
 
 router.post("/", async (req, res) => {
   try {
@@ -50,8 +52,12 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
+    const user = req.user;
+    if(!user.isAdmin) return handleError(res, 403,"Authorization Error: You must be an admin user to see all users in the database"
+    );
+
     const users = await getUsers();
     return res.send(users);
   } catch (error) {
@@ -59,9 +65,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id",auth, async (req, res) => {
   try {
     const { id } = req.params;
+    const { _id, isAdmin } = req.user;
+
+    if(_id !== id && !isAdmin) 
+    return handleError(res,403,"Authorization Error: You must be an admin user to see all users in the database");
     const user = await getUser(id);
     return res.send(user);
   } catch (error) {
@@ -69,7 +79,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",auth, async (req, res) => {
   try {
     const { id } = req.params;
     let user = req.body;
@@ -79,18 +89,21 @@ router.put("/:id", async (req, res) => {
 
     user = normalizeUser(user);
     user = await updateUser(id, user);
+    console.log(user);
     return res.send(user);
   } catch (error) {
-    return handleError(res, error.status || 500, error.message);
+    return handleError(res, error.status || 500, error);
   }
 });
 
 router.patch("/:id", async (req, res) => {
   try {
+
     const { id } = req.params;
     const user = await changeUserBusinessStatus(id);
     return res.send(user);
   } catch (error) {
+    console.log(error)
     return handleError(res, error.status || 500, error.message);
   }
 });

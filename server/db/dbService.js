@@ -1,4 +1,5 @@
-const ENVIRONMENT = undefined || "development";
+const config = require("config")
+const ENVIRONMENT = config.get("NODE_ENV");
 
 const connectToDB = () => {
   if (ENVIRONMENT === "development")require("./mongodb/connectToMongoLocally");

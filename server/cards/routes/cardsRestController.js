@@ -12,6 +12,9 @@ const {
 } = require("../models/cardsAccessDataService");
 const validateCard = require("../validations/cardValidationService");
 const router = express.Router();
+const auth = require("../../auth/authServise")
+
+
 
 router.get("/", async (req, res) => {
   try {
@@ -22,9 +25,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/my-cards", async (req, res) => {
+router.get("/my-cards", auth, async (req, res) => {
   try {
-    const userId = 123456;
+    const userId = req.user._id;
     const card = await getMyCards(userId);
     return res.send(card);
   } catch (error) {
@@ -42,26 +45,39 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    let card = req.body;
-    const user = { _id: "6376667871c9c1d0b30481f7" };
-    const { error } = validateCard(card);
-    if (error)
-      return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
 
-    card = await normalizeCard(card, user._id);
-    card = await createCard(card);
-    return res.status(201).send(card);
+router.post("/", auth, async (req, res) => {
+  try {
+      let card = req.body;
+      const user = req.user;
+      if(!user.isBusiness)
+        return handleError(res, 403, "Authentication Error: Unauthorize user");
+      const { error } = validateCard(card);
+      if (error)
+        return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
+  
+      card = await normalizeCard(card, user._id);
+
+      
+        card = await createCard(card);
+        return res.status(201).send(card);
+
   } catch (error) {
-    return handleError(res, error.status || 500, error.message);
+    return handleError(res, error.status || 500, error);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     let card = req.body;
     const cardId = req.params.id;
+    const userId = req.user._id;
+
+    if (userId !== card.user_id) {
+      const message =
+        "Authorization Error: Only the user who created the business card can update its details";
+      return handleError(res, 403, message);
+    }
 
     const { error } = validateCard(card);
     if (error)
@@ -75,22 +91,23 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+
+router.patch("/:id", auth, async (req, res) => {
   try {
     const cardId = req.params.id;
-    const user = { _id: "6376667871c9c1d0b30481f7" };
-    const card = await likeCard(cardId, user._id);
+    const userId = req.user._id;
+    const card = await likeCard(cardId, userId);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const cardId = req.params.id;
-    const user = { _id: "6376667871c9c1d0b30481f7" };
-    const card = await deleteCard(cardId, user._id);
+    const user = req.user;
+    const card = await deleteCard(cardId, user);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);

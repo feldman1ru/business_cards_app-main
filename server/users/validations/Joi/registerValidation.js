@@ -5,7 +5,7 @@ const registerValidation = user => {
     name: Joi.object()
       .keys({
         first: Joi.string().min(2).max(256).required(),
-        middle: Joi.string().min(2).max(256).allow(""),
+        middle: Joi.string().min(2).max(256).required().allow(""),
         last: Joi.string().min(2).max(256).required(),
       })
       .required(),
