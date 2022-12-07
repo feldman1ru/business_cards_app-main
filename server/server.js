@@ -1,4 +1,7 @@
 const chalk = require("chalk");
+const morgan = require("morgan");
+const fs = require("fs");
+const path = require("path");
 const express = require("express");
 const { handleError } = require("./utils/handleErrors");
 const app = express();
@@ -7,9 +10,12 @@ const cors = require("./middlewares/cors");
 const logger = require("./logger/loggerService");
 const connectToDB = require("./db/dbService");
 const config = require("config");
-const {generateInitialCards, generateInitialUsers} = require("./initialData/initialDataService")
-const { required } = require("joi");
+const {generateInitialCards, generateInitialUsers} = require("./initialData/initialDataService");
 
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname,"access.log"),{ flags:"a"})
+
+app.use(morgan('common', {stream: accessLogStream}));
 
 app.use(cors);
 app.use(logger);
@@ -29,3 +35,5 @@ generateInitialCards();
 generateInitialUsers();
 }
 );
+
+
