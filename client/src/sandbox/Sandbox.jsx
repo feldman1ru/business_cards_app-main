@@ -23,6 +23,15 @@ const Sandbox = () => {
 			{/* <Loops /> */}
 			<Cards />
 			{/* <OnClick /> */}
+			{/* <RaisingEvents /> */}
+			{/* <FatherPropTypeError /> */}
+			{/* <FatherMainTypes /> */}
+			{/* <FatherArrayOfAndObjectOf /> */}
+			{/* <FatherOneOfVsOneOfType /> */}
+			{/* <FatherExactVsRequired /> */}
+			{/* <FatherShape /> */}
+			{/* <FatherAnyAndDefaultProps /> */}
+			{/* <FatherChildrenAndNode /> */}
 		</div>
 	);
 };

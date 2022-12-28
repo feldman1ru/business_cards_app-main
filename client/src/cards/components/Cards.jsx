@@ -1,20 +1,16 @@
 import React from 'react';
-// import { Box } from '@mui/material';
 import Card from './card/Card';
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const Cards = () => {
-	const handleCardDelete = (bizNumber) => {
-		console.log(`you delete card no ${bizNumber}`);
+	const handleCardDelete = (cardId) => {
+		console.log(`you delete card no ${cardId}`);
 	};
 
-	const handleCardLike = (bizNumber) => {
-		console.log(`you Like card no ${bizNumber}`);
+	const handleCardLike = (cardId) => {
+		console.log(`you Like card no ${cardId}`);
 	};
 
-	const handleCardEdit = (bizNumber) => {
-		console.log(`you edit card no ${bizNumber}`);
-	};
 	const cards = [
 		{
 			_id: '1',
@@ -116,8 +112,7 @@ const Cards = () => {
 				<Grid item xs={12} sm={6} md={4} lg={3} key={card._id}>
 					<Card
 						card={card}
-						handleDeleteClick={handleCardDelete}
-						handleEditClick={handleCardEdit}
+						handleCardDelete={handleCardDelete}
 						handleCardLike={handleCardLike}
 					/>
 				</Grid>
@@ -125,22 +120,5 @@ const Cards = () => {
 		</Grid>
 	);
 };
-
-// const OnClick = (Cards) => {
-// 	const handleCardDelete = (bizNumber) =>
-// 		console.log(`you delete card + ${bizNumber}`);
-// 	return (
-// 		<Button
-// 			variant="outlined"
-// 			sx={{ m: 2 }}
-// 			onClick={(bizNumber) =>
-// 				handleCardDelete(`you delete card + ${bizNumber}`)
-// 			}
-// 		>
-// 			Click me
-// 		</Button>
-// 	);
-// };
-// OnClick();
 
 export default Cards;
