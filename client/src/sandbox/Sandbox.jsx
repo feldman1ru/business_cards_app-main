@@ -8,6 +8,12 @@ import React from 'react';
 // import FatherPropsTwoKeys from './mui-santbox/props/props-two-keys/FacherPropsTwoKeys';
 // import Loops from './Loops';
 import Cards from '../cards/components/Cards';
+// import UseState from './hooks/UseState';
+// import UseStateWithFunction from './hooks/UseStateWithFunction';
+// import UseStateWithArrayOfObject from './hooks/UseStateWithArrayOfObject';
+// import SetPost from './Set Post/SetPost';
+
+// import UseStateWithObject from './hooks/UseStateWithObject';
 // import OnClick from './events/OnClick';
 
 const Sandbox = () => {
@@ -16,7 +22,7 @@ const Sandbox = () => {
 			{/* {CompLogic } */}
 			{/* <StringInterpolation /> */}
 			{/* <InlineStyle /> */}
-			{/* <MuiSandbox/> */}
+			{/* <MuiSandbox /> */}
 			{/* <FatherPropsString/> */}
 			{/* <FatherPropsObject/> */}
 			{/* <FatherPropsTwoKeys/> */}
@@ -32,6 +38,11 @@ const Sandbox = () => {
 			{/* <FatherShape /> */}
 			{/* <FatherAnyAndDefaultProps /> */}
 			{/* <FatherChildrenAndNode /> */}
+			{/* {<UseState />} */}
+			{/* <UseStateWithFunction/> */}
+			{/* <UseStateWithObject /> */}
+			{/* <UseStateWithArrayOfObject /> */}
+			{/* <SetPost/> */}
 		</div>
 	);
 };

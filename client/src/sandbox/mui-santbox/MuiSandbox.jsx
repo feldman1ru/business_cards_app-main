@@ -5,7 +5,9 @@ import React from 'react';
 // import TypographyComponent from "./TypographyComponents";
 // import MuiConteiner './layout/MuiConteiner'
 // import MuiStack from './layout/MuiStack';
-import MuiGrid from './layout/MuiGrid';
+// import MuiGrid from './layout/MuiGrid';
+import MuiAppBar from './navigation/MuiAppBar';
+import MuiBottomNavigation from './navigation/MuiBottomNavigation';
 
 const MuiSandbox = () => {
 	return (
@@ -17,7 +19,9 @@ const MuiSandbox = () => {
 			{/* // <MuiConteiner/> */}
 			{/* <MuiStack />
 			 */}
-			<MuiGrid />
+			{/* <MuiGrid /> */}
+			<MuiAppBar />
+			<MuiBottomNavigation />
 		</div>
 	);
 };
