@@ -1,36 +1,37 @@
-const chalk = require("chalk");
-const normalizeCard = require("../cards/helpers/normalizeCard");
-const normalizeUser = require("../users/helpers/normalizeUser");
-const { createCard } = require("../cards/models/cardsAccessDataService");
-const { registerUser } = require("../users/models/usersAccessDataService");
-const data = require("./initialData.json");
+const chalk = require('chalk');
+const normalizeCard = require('../cards/helpers/normalizeCard');
+const normalizeUser = require('../users/helpers/normalizeUser');
+const { createCard } = require('../cards/models/cardsAccessDataService');
+const { registerUser } = require('../users/models/usersAccessDataService');
+const data = require('./initialData.json');
+const { genereteUserPassword } = require('../users/helpers/bcrypt');
 
 const generateInitialCards = async () => {
-  const { cards } = data;
-  cards.forEach(async (card) => {
-    try {
-      const userId = "6376274068d78742d84f31d2";
-      card = await normalizeCard(card, userId);
-      await createCard(card);
-      return;
-    } catch (error) {
-      return console.log(chalk.redBright(error.message));
-    }
-  });
+	const { cards } = data;
+	cards.forEach(async (card) => {
+		try {
+			const userId = '6376274068d78742d84f31d2';
+			card = await normalizeCard(card, userId);
+			await createCard(card);
+			return;
+		} catch (error) {
+			return console.log(chalk.redBright(error.message));
+		}
+	});
 };
 
 const generateInitialUsers = async () => {
-  const { users } = data;
-  users.forEach(async (user) => {
-    try {
-      
-      user = await normalizeUser(user);
-      await registerUser(user);
-      return;
-    } catch (error) {
-      return console.log(chalk.redBright(error.message));
-    }
-  });
+	const { users } = data;
+	users.forEach(async (user) => {
+		try {
+			user = await normalizeUser(user);
+			user.password = genereteUserPassword(user.password);
+			await registerUser(user);
+			return;
+		} catch (error) {
+			return console.log(chalk.redBright(error.message));
+		}
+	});
 };
 
 exports.generateInitialCards = generateInitialCards;

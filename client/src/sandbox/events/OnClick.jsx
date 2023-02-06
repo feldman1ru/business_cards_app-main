@@ -23,22 +23,22 @@ import React from 'react';
 
 // ************* onClick with arguments **********
 const OnClick = () => {
-	const handelClick = (text, e) => {
+	const handleClick = (text, e) => {
 		console.log(e.target);
 		console.log(text);
 	};
 	return (
 		<>
-			<Button variant="outlined" sx={{ m: 2 }} onClick={handelClick}>
+			<Button variant="outlined" sx={{ m: 2 }} onClick={handleClick}>
 				Click me one!!
 			</Button>
-			<Button variant="outlined" sx={{ m: 2 }} onClick={(e) => handelClick(e)}>
+			<Button variant="outlined" sx={{ m: 2 }} onClick={(e) => handleClick(e)}>
 				Click me two!!
 			</Button>
 			<Button
 				variant="outlined"
 				sx={{ m: 2 }}
-				onClick={(e) => handelClick('hello', e)}
+				onClick={(e) => handleClick('hello', e)}
 			>
 				Click me three!!
 			</Button>

@@ -1,23 +1,25 @@
 import './App.css';
 import Layout from './layout/Layout';
-import CardPage from './cards/pages/CardPage';
-import AboutPage from './pages/AboutPage';
-// import Cards from './cards/components/Cards';
-// import PageHeader from './components/PageHeader';
-// import Sandbox from './sandbox/Sandbox';
-// import Card from './cards/components/card/Card.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import Router from '../src/routes/Router';
+import { ThemeProvider } from './providers/ThemeProvider';
+import { SnackbarProvider } from './providers/SnackBarProvider';
+import { UserProvider } from './users/providers/UserProvider';
 
 const App = () => {
 	return (
 		<div className="App">
-			{/* <PageHeader/> */}
-			{/* <Card/> */}
-			{/* <Cards /> */}
-			<Layout>
-				<CardPage />
-				{/* <AboutPage /> */}
-				{/* <Sandbox /> */}
-			</Layout>
+			<BrowserRouter>
+				<ThemeProvider>
+					<SnackbarProvider>
+						<UserProvider>
+							<Layout>
+								<Router />
+							</Layout>
+						</UserProvider>
+					</SnackbarProvider>
+				</ThemeProvider>
+			</BrowserRouter>
 		</div>
 	);
 };

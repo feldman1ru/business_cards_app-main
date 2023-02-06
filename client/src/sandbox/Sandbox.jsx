@@ -1,48 +1,59 @@
 import React from 'react';
-// import StringInterpolation from './StringInterpolation';
-// import CompLogic from './CompLogic'
-// import InlineStyle from '../styles/InlineStyle';
-// import MuiSandbox from './mui-santbox/MuiSandbox';
-// import FatherPropsString from './mui-santbox/props/props-string/FatherPropsString';
-// import FatherPropsObject from './mui-santbox/props/props-object/FatherPropsObject';
-// import FatherPropsTwoKeys from './mui-santbox/props/props-two-keys/FacherPropsTwoKeys';
-// import Loops from './Loops';
-import Cards from '../cards/components/Cards';
-// import UseState from './hooks/UseState';
-// import UseStateWithFunction from './hooks/UseStateWithFunction';
-// import UseStateWithArrayOfObject from './hooks/UseStateWithArrayOfObject';
-// import SetPost from './Set Post/SetPost';
-
-// import UseStateWithObject from './hooks/UseStateWithObject';
-// import OnClick from './events/OnClick';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import NavItem from '../routes/NavItem';
+import { Outlet } from 'react-router-dom';
+import { useUser } from '../users/providers/UserProvider';
+import { Navigate } from 'react-router-dom';
+import ROUTES from '../routes/routesModel';
 
 const Sandbox = () => {
+	const { user } = useUser();
+
+	if (!user || !user.isAdmin) return <Navigate replace to={ROUTES.CARDS} />;
+
 	return (
 		<div>
-			{/* {CompLogic } */}
-			{/* <StringInterpolation /> */}
-			{/* <InlineStyle /> */}
-			{/* <MuiSandbox /> */}
-			{/* <FatherPropsString/> */}
-			{/* <FatherPropsObject/> */}
-			{/* <FatherPropsTwoKeys/> */}
-			{/* <Loops /> */}
-			<Cards />
-			{/* <OnClick /> */}
-			{/* <RaisingEvents /> */}
-			{/* <FatherPropTypeError /> */}
-			{/* <FatherMainTypes /> */}
-			{/* <FatherArrayOfAndObjectOf /> */}
-			{/* <FatherOneOfVsOneOfType /> */}
-			{/* <FatherExactVsRequired /> */}
-			{/* <FatherShape /> */}
-			{/* <FatherAnyAndDefaultProps /> */}
-			{/* <FatherChildrenAndNode /> */}
-			{/* {<UseState />} */}
-			{/* <UseStateWithFunction/> */}
-			{/* <UseStateWithObject /> */}
-			{/* <UseStateWithArrayOfObject /> */}
-			{/* <SetPost/> */}
+			<AppBar position="sticky" color="transparent">
+				<Toolbar>
+					<NavItem to="logic" label="comp-logic" sx={{ color: 'black' }} />
+					<NavItem
+						to="mui-sandbox"
+						label="mui sandbox"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem
+						label="life cycle hooks"
+						to="life-cycle"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem
+						label="custom counter hook"
+						to="custom-counter-hook"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem
+						label="custom name hook"
+						to="custom-name-hook"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem
+						label="memoization"
+						to="memoization"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem label="loops" to="loops" sx={{ color: 'black' }} />
+					<NavItem
+						label="string Interpolation"
+						to="stringInterpolation"
+						sx={{ color: 'black' }}
+					/>
+					<NavItem label="context" to="context" sx={{ color: 'black' }} />
+					<NavItem label="form" to="form" sx={{ color: 'black' }} />
+					<NavItem label="use ref" to="use-ref" sx={{ color: 'black' }} />
+				</Toolbar>
+			</AppBar>
+			<Outlet />
 		</div>
 	);
 };

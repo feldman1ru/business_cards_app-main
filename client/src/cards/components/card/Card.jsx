@@ -6,18 +6,25 @@ import CardActionBar from './CardActionBar';
 import MuiCard from '@mui/material/Card';
 import cardType from '../../models/types/cardType';
 import { func } from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../../routes/routesModel';
 
-const Card = ({ card, handleCardDelete, handleCardLike }) => {
+const Card = ({ card, onDelete, onLike }) => {
+	const navigate = useNavigate();
 	return (
 		<MuiCard sx={{ minWidth: 280 }}>
-			<CardActionArea>
+			<CardActionArea
+				onClick={() => navigate(`${ROUTES.CARD_DETAILS}/${card._id}`)}
+			>
 				<CardHead image={card.image} />
 				<CardBody card={card} />
 			</CardActionArea>
 			<CardActionBar
 				cardId={card._id}
-				handleCardDelete={handleCardDelete}
-				handleCardLike={handleCardLike}
+				onDelete={onDelete}
+				cardUserId={card.user_id}
+				cardLikes={card.likes}
+				onLike={onLike}
 			/>
 		</MuiCard>
 	);
@@ -25,8 +32,8 @@ const Card = ({ card, handleCardDelete, handleCardLike }) => {
 
 Card.propTypes = {
 	card: cardType.isRequired,
-	handleCardDelete: func.isRequired,
-	handleCardLike: func.isRequired,
+	onDelete: func.isRequired,
+	// onLike: func.isRequired,
 };
 
 export default Card;

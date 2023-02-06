@@ -1,32 +1,32 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Logo from "../Logo/Logo";
-import LogoIcon from "../Logo/LogoIcon";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import React from 'react';
+import Box from '@mui/material/Box';
+import Logo from '../Logo/Logo';
+import LogoIcon from '../Logo/LogoIcon';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import NavItem from '../../../../routes/NavItem';
+import ROUTES from '../../../../routes/routesModel';
+import { useUser } from '../../../../users/providers/UserProvider';
 
 const LeftNavBar = () => {
-  return (
-    <Box>
-      <LogoIcon />
-      <Logo />
+	const { user } = useUser();
+	return (
+		<Box>
+			<LogoIcon />
+			<Logo />
 
-      <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
-        <Button color="inherit">
-          <Typography>About</Typography>
-        </Button>
-        <Button color="inherit">
-          <Typography>My Cards</Typography>
-        </Button>
-        <Button color="inherit">
-          <Typography>Fav Cards</Typography>
-        </Button>
-        <Button color="inherit">
-          <Typography>Sandbox</Typography>
-        </Button>
-      </Box>
-    </Box>
-  );
+			<Box sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
+				<NavItem to={ROUTES.ABOUT} label="about" />
+				{user && <NavItem to={ROUTES.FAV_CARDS} label="Fav Cards" />}
+				{user && user.isBusiness && (
+					<NavItem to={ROUTES.MY_CARDS} label="My Cards" />
+				)}
+				{user && user.isAdmin && (
+					<NavItem to={ROUTES.SANDBOX} label="Sandbox" />
+				)}
+			</Box>
+		</Box>
+	);
 };
 
 export default LeftNavBar;
