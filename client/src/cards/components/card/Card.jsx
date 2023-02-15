@@ -33,7 +33,7 @@ const Card = ({ card, onDelete, onLike }) => {
 Card.propTypes = {
 	card: cardType.isRequired,
 	onDelete: func.isRequired,
-	// onLike: func.isRequired,
+	onLike: func.isRequired,
 };
 
 export default Card;

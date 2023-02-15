@@ -5,10 +5,12 @@ import ROUTES from '../../../../routes/routesModel';
 import { useUser } from '../../../../users/providers/UserProvider';
 import useUsers from '../../../../users/hooks/useUsers';
 import MenuLink from '../../../../routes/MenuLink';
+import { useNavigate } from 'react-router-dom';
 
 const Menu = ({ isOpen, anchorEl, onClose }) => {
 	const { user } = useUser();
 	const { handleLogout } = useUsers();
+	const navigate = useNavigate();
 
 	const onLogout = () => {
 		handleLogout();
@@ -58,16 +60,20 @@ const Menu = ({ isOpen, anchorEl, onClose }) => {
 					<>
 						<MenuLink
 							text="profile"
-							navigateTo={ROUTES.USER_PROFILE}
+							navigateTo={`${ROUTES.USER_PROFILE}/${user._id}`}
 							onClick={onClose}
 						/>
 						<MenuLink
 							text="edit account"
-							navigateTo={ROUTES.EDIT_USER}
+							// navigateTo={ROUTES.EDIT_USER}
+							navigateTo={`${ROUTES.EDIT_USER}/${user._id}`}
 							onClick={onClose}
+							// onClick={() => navigate(`${ROUTES.EDIT_USER}/${user._id}`)}
 						/>
 
-						<MenuItem onClick={onLogout}>Logout</MenuItem>
+						<MenuItem onClick={onLogout} navigateto={ROUTES.CARDS}>
+							!!Logout
+						</MenuItem>
 					</>
 				)}
 			</Box>

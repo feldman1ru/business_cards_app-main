@@ -15,7 +15,7 @@ import { useTheme as useMuiTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
 
 const RightNavBar = () => {
-	const [anchoeEl, setAnchoeEl] = useState(null);
+	const [anchorEl, setAnchoeEl] = useState(null);
 	const [isMenuOpen, setMenuStatus] = useState(false);
 
 	const theme = useMuiTheme();
@@ -39,16 +39,6 @@ const RightNavBar = () => {
 		handleCloseMenu();
 	}, [screenSize]);
 
-	// const setAnchorEl = (target) => {
-	// 	anchorEl = target;
-	// 	console.log('you opened menu');
-	// };
-
-	// const closeMenu = () => {
-	// 	anchoeEl = null;
-	// 	console.log('you closed menu');
-	// };
-
 	return (
 		<>
 			<Box sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
@@ -67,7 +57,7 @@ const RightNavBar = () => {
 
 			<MenuBar
 				isMenuOpen={isMenuOpen}
-				anchorEl={anchoeEl}
+				anchorEl={anchorEl}
 				onCloseMenu={handleCloseMenu}
 			/>
 		</>

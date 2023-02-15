@@ -6,7 +6,7 @@ import Error from '../../components/Error';
 import { Typography } from '@mui/material';
 import cardType from '../models/types/cardType';
 
-const CardFeedback = ({ onDelete, onLike, isLoading, error, cards }) => {
+const CardFeedback = ({ isLoading, error, cards, onDelete, onLike }) => {
 	if (isLoading) return <Spinner />;
 	if (error) return <Error errorMessage={error} />;
 
@@ -29,7 +29,7 @@ CardFeedback.propTypes = {
 	onLike: func.isRequired,
 };
 
-CardFeedback.defaultProp = {
+CardFeedback.defaultProps = {
 	onLike: () => {},
 };
 

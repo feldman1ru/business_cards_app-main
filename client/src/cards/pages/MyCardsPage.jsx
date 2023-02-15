@@ -19,11 +19,6 @@ const MyCardsPage = () => {
 		handleGetMyCards();
 	}, [handleGetMyCards]);
 
-	// const onDeleteCard = async (cardId) => {
-	// 	await handleDeleteCard(cardId);
-	// 	await handleGetMyCards();
-	// };
-
 	if (!user) return <Navigate replace to={ROUTES.CARDS} />;
 
 	return (

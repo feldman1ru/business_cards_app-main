@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import {
 	getCards,
 	getMyCards,
@@ -11,7 +11,7 @@ import {
 import useAxios from '../../hooks/useAxios';
 import { useSnackbar } from '../../providers/SnackBarProvider';
 import ROUTES from '../../routes/routesModel';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import normalizeCard from '../helpers/normalization/normalizeCard';
 import { useUser } from '../../users/providers/UserProvider';
 
@@ -22,8 +22,35 @@ const useCards = () => {
 	const [error, setError] = useState(null);
 	const { user } = useUser();
 	const navigate = useNavigate();
+	const [query, setQuery] = useState('');
+	const [filteredCards, setFilter] = useState(null);
+	const [searchParams] = useSearchParams();
 	const snack = useSnackbar();
 	useAxios();
+
+	useEffect(() => {
+		setQuery(searchParams.get('q') ?? '');
+	}, [searchParams]);
+
+	useEffect(() => {
+		if (cards) {
+			setFilter(
+				cards.filter(
+					(card) =>
+						card.title.includes(query) ||
+						String(card.bizNumber).includes(query) ||
+						card.phone.includes(query) ||
+						card.subtitle.includes(query) ||
+						card.description.includes(query) ||
+						card.email.includes(query) ||
+						card.address.country.includes(query) ||
+						card.address.city.includes(query) ||
+						card.address.street.includes(query) ||
+						String(card.address.houseNumber).includes(query)
+				)
+			);
+		}
+	}, [cards, query]);
 
 	const requestStatus = (loading, errorMassage, cards, card = null) => {
 		setLoading(loading);
@@ -124,8 +151,8 @@ const useCards = () => {
 	}, []);
 
 	const value = useMemo(() => {
-		return { isLoading, cards, card, error };
-	}, [isLoading, cards, card, error]);
+		return { isLoading, cards, card, error, filteredCards };
+	}, [isLoading, cards, card, error, filteredCards]);
 
 	return {
 		value,

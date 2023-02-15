@@ -11,10 +11,6 @@ import CompLogic from '../sandbox/CompLogic';
 import SingupPage from '../users/pages/SingupPage';
 import Loops from '../sandbox/Loops';
 import StringInterpolation from '../sandbox/StringInterpolation';
-// import OnClick from '../sandbox/events/OnClick';
-// import UseState from '../sandbox/hooks/UseState';
-// import RaisingEvents from '../sandbox/events/RaisingEvents';
-// import SetPost from '../sandbox/Set Post/SetPost';
 import MuiSandbox from '../sandbox/mui-santbox/MuiSandbox';
 import MuiButton from '../sandbox/mui-santbox/data-display/MuiButton';
 import MuiDivider from '../sandbox/mui-santbox/data-display/MuiDivider';
@@ -46,6 +42,8 @@ import UseRefVsUseState from '../sandbox/hooks/useRef/UseRefVsUseState';
 import EditCardPage from '../cards/pages/EditCardPage';
 import CreateCardPage from '../cards/pages/CreateCardPage';
 import FavCardsPage from '../cards/pages/FavCardPage';
+import EditUserPage from '../users/pages/EditUserPage';
+import UserProfile from '../users/pages/UserProfile';
 
 const Router = () => {
 	return (
@@ -63,6 +61,11 @@ const Router = () => {
 			<Route path={ROUTES.FAV_CARDS} element={<FavCardsPage />} />
 			<Route path={ROUTES.LOGIN} element={<LoginPage />} />
 			<Route path={ROUTES.SIGNUP} element={<SingupPage />} />
+			<Route path={`${ROUTES.EDIT_USER}/:userId`} element={<EditUserPage />} />
+			<Route
+				path={`${ROUTES.USER_PROFILE}/:userId`}
+				element={<UserProfile />}
+			/>
 			<Route path={ROUTES.SANDBOX} element={<Sandbox />}>
 				<Route path="logic" element={<CompLogic />} />
 				<Route path="use-ref" element={<UseRefSandbox />}>

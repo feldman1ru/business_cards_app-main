@@ -19,3 +19,37 @@ export const singup = async (normalizedUser) => {
 		return Promise.reject(error.message);
 	}
 };
+
+export const getUser = async (userId) => {
+	try {
+		const { data } = await axios.get(`${apiUrl}/users/${userId}`);
+		console.log(data);
+		return data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error.message);
+	}
+};
+
+export const getUsers = async (userId) => {
+	try {
+		const { data } = await axios.get(`${apiUrl}/users/${userId}`);
+		return data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error.message);
+	}
+};
+
+export const editUser = async (userId, normalaizeUser) => {
+	try {
+		const { data } = await axios.put(
+			`${apiUrl}/users/${userId}`,
+			normalaizeUser
+		);
+		return data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error.message);
+	}
+};

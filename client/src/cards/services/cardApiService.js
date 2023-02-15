@@ -14,6 +14,7 @@ export const getCards = async () => {
 export const getCard = async (cardId) => {
 	try {
 		const { data } = await axios.get(`${apiUrl}/cards/${cardId}`);
+
 		return data;
 	} catch (error) {
 		console.log(error);
@@ -29,16 +30,6 @@ export const getMyCards = async () => {
 		return Promise.reject(error.message);
 	}
 };
-// //провирити не робе криейт кард
-// export const createCard = async (cardId) => {
-// 	try {
-// 		const { data } = await axios.post(`${apiUrl}/card/create_card/${cardId}`);
-// 		return data;
-// 	} catch (error) {
-// 		console.log(error);
-// 		return Promise.reject(error.message);
-// 	}
-// };
 
 export const createCard = async (card) => {
 	try {

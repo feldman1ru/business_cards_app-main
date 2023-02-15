@@ -7,8 +7,6 @@ import { useUser } from '../../users/providers/UserProvider';
 import { Navigate } from 'react-router-dom';
 import ROUTES from '../../routes/routesModel';
 import { Container } from '@mui/material';
-// import Form from '../../forms/components/Form';
-// import Input from '../../forms/components/Input';
 import CardForm from '../components/CardForm';
 
 const CreateCardPage = () => {

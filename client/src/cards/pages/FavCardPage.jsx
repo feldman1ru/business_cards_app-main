@@ -12,7 +12,7 @@ const FavCardsPage = () => {
 
 	useEffect(() => {
 		handleGetFavCards();
-	}, [handleGetFavCards]);
+	}, []);
 
 	const onDeleteCard = useCallback(
 		async (cardId) => {
@@ -24,7 +24,7 @@ const FavCardsPage = () => {
 
 	const changeLikeStatus = useCallback(async () => {
 		await handleGetFavCards();
-	}, [handleGetFavCards]);
+	}, []);
 
 	return (
 		<Container>

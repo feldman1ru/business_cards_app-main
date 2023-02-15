@@ -10,7 +10,7 @@ import useUsers from '../../../../users/hooks/useUsers';
 
 const MenuBar = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
 	const { user } = useUser();
-	const { handleLogut } = useUsers();
+	const { handleLogout } = useUsers();
 
 	return (
 		<MuiMenu
@@ -39,8 +39,15 @@ const MenuBar = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
 					</NavBarLink>
 					<NavBarLink to={ROUTES.ABOUT}>
 						<Button color="inherit">
-							<Typography>About</Typography>
+							<Typography>WWAbout</Typography>
 						</Button>
+
+						{/* <MenuItem
+							sx={{ display: { xs: 'block', md: 'none' } }}
+							onClick={onCloseMenu}
+						>
+							About
+						</MenuItem> */}
 					</NavBarLink>
 					<NavBarLink to={ROUTES.SIGNUP}>
 						<MenuItem
@@ -55,12 +62,12 @@ const MenuBar = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
 
 			{user && (
 				<Box>
-					<MenuItem onClick={handleLogut}>Logout</MenuItem>
+					<MenuItem onClick={handleLogout}>Logout</MenuItem>
 
 					<NavBarLink to={ROUTES.USER_PROFILE}>
 						<MenuItem onClick={onCloseMenu}>Profile</MenuItem>
 					</NavBarLink>
-					<NavBarLink to={ROUTES.EDIT_USER}>
+					<NavBarLink to={`${ROUTES.EDIT_USER}/${user._id}`}>
 						<MenuItem onClick={onCloseMenu}>Edit account</MenuItem>
 					</NavBarLink>
 				</Box>

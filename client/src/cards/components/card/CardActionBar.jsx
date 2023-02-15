@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,7 @@ import CardDeleteDialog from './CardDeleteDialog';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../../routes/routesModel';
 import useCards from '../../hooks/useCards';
+import { useState } from 'react';
 
 const CardActionBar = ({ cardId, onDelete, cardUserId, cardLikes, onLike }) => {
 	const [isDialogOpen, setDialog] = useState(false);
@@ -23,9 +24,9 @@ const CardActionBar = ({ cardId, onDelete, cardUserId, cardLikes, onLike }) => {
 		return !!cardLikes.find((id) => id === user._id);
 	});
 
-	const handleLike = () => {
+	const handleLike = async () => {
 		setLike((prev) => !prev);
-		handleLikeCard(cardId);
+		await handleLikeCard(cardId);
 		onLike();
 	};
 
