@@ -1,43 +1,33 @@
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import { useEffect } from 'react';
 import useForm from '../../forms/hooks/useForm';
-import { useUser } from '../../users/providers/UserProvider';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import ROUTES from '../../routes/routesModel';
-import { Container, Table } from '@mui/material';
-import Form from '../../forms/components/Form';
-import Input from '../../forms/components/Input';
+import { Table } from '@mui/material';
 import { useParams } from 'react-router-dom';
-// import mapCardToModel from '../helpers/normalization/mapToModel';
-// import normalizeCard from './../helpers/normalization/normalizeCard';
-// import initialSignupForm from '../helpers/initialForms/initialSingUpForm';
 import userSchema from '../hooks/userSchema';
 import normalizeUser from '../helpers/normalization/normalizeUser';
 import mapUserToModel from '../helpers/normalization/mapToModelUser';
 import useUsers from '../hooks/useUsers';
 import initialUserForm from '../helpers/initialForms/initialUserForm';
-import UserForm from '../components/UserForm';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 
 const UserProfile = () => {
-	// const { user } = useParams();
+	const { userId } = useParams();
 	const {
-		handleGetUsers,
+		handleGetUser,
 		handleUpdateUser,
 		value: { user },
 	} = useUsers();
-	const { userId } = useUser();
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		handleGetUsers(user._id).then((data) => {
-			if (user._id !== data._id)
-				return navigate(`${ROUTES.EDIT_USER}/${user._id}`);
+		handleGetUser(userId).then((data) => {
+			if (userId !== user._id) return navigate(ROUTES.CARDS);
 			const modeledUser = mapUserToModel(data);
 			rest.setData(modeledUser);
 		});
@@ -49,10 +39,13 @@ const UserProfile = () => {
 			user_id: user.user_id,
 		})
 	);
+
+	if (!user) return <Navigate replace to={ROUTES.CARDS} />;
+
 	if (user)
 		return (
-			<Table>
-				<TableContainer
+			<TableContainer>
+				<Table
 					sx={{
 						paddingTop: 8,
 						display: 'flex',
@@ -80,6 +73,16 @@ const UserProfile = () => {
 						<TableRow>
 							<TableCell>Email</TableCell>
 							<TableCell>{value.data.email}</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>Business status</TableCell>
+							<TableCell>
+								<Checkbox
+									disabled
+									checked={!!value.data.isBusiness}
+									color="primary"
+								/>
+							</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell>Image URL</TableCell>
@@ -114,8 +117,8 @@ const UserProfile = () => {
 							<TableCell>{value.data.zip}</TableCell>
 						</TableRow>
 					</TableHead>
-				</TableContainer>
-			</Table>
+				</Table>
+			</TableContainer>
 		);
 };
 

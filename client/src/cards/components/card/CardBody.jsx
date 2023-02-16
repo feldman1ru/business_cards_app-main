@@ -16,7 +16,7 @@ const CardBody = ({ card }) => {
 			<Box mt={1}>
 				<Typography variant="body2" color="text.secondary">
 					<Typography variant="subtitle1" component="strong">
-						Phone:{' '}
+						Phone:
 					</Typography>
 					{phone}
 				</Typography>

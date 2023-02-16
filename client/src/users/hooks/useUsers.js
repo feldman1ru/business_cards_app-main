@@ -1,6 +1,14 @@
 import { useState, useCallback, useMemo } from 'react';
 import useAxios from '../../hooks/useAxios';
-import { editUser, getUsers, login, singup } from '../services/usersApiService';
+import {
+	editUser,
+	getUsers,
+	// getUser,
+	login,
+	singup,
+	getUserFromServer,
+	editUsers,
+} from '../services/usersApiService';
 import {
 	getUser,
 	removeToken,
@@ -69,7 +77,7 @@ const useUsers = () => {
 
 	const handleGetUser = useCallback(async (userId) => {
 		try {
-			const user = await getUser(userId);
+			const user = await getUserFromServer(userId);
 			requestStatus(false, null, null, user);
 			return user;
 		} catch (error) {
@@ -77,11 +85,11 @@ const useUsers = () => {
 		}
 	}, []);
 
-	const handleGetUsers = useCallback(async (userId) => {
+	const handleGetUsers = useCallback(async () => {
 		try {
-			const user = await getUsers(userId);
-			requestStatus(false, null, null, user);
-			return user;
+			const users = await getUsers();
+			requestStatus(false, null, null, users);
+			return users;
 		} catch (error) {
 			requestStatus(false, error, null);
 		}
@@ -94,6 +102,18 @@ const useUsers = () => {
 				requestStatus(false, null, null, user);
 				snack('success', 'The user has been successfully updated');
 				navigate(ROUTES.MY_CARDS);
+			} catch (error) {
+				requestStatus(false, error, null);
+			}
+		},
+		[snack]
+	);
+	const handleUpdateAllUser = useCallback(
+		async (userId) => {
+			try {
+				const users = await editUser(userId);
+				requestStatus(false, null, null, users);
+				snack('success', 'The user has been successfully updated');
 			} catch (error) {
 				requestStatus(false, error, null);
 			}
@@ -114,6 +134,8 @@ const useUsers = () => {
 		handleGetUser,
 		handleUpdateUser,
 		handleGetUsers,
+		handleUpdateAllUser,
+		getUserFromServer,
 	};
 };
 

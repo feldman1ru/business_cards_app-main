@@ -3,45 +3,27 @@ import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import { useEffect } from 'react';
 import useForm from '../../forms/hooks/useForm';
-import { useUser } from '../../users/providers/UserProvider';
 import { Navigate, useNavigate } from 'react-router-dom';
 import ROUTES from '../../routes/routesModel';
 import { Container } from '@mui/material';
 import Form from '../../forms/components/Form';
 import Input from '../../forms/components/Input';
 import { useParams } from 'react-router-dom';
-// import mapCardToModel from '../helpers/normalization/mapToModel';
-// import normalizeCard from './../helpers/normalization/normalizeCard';
-// import initialSignupForm from '../helpers/initialForms/initialSingUpForm';
 import userSchema from '../hooks/userSchema';
 import normalizeUser from '../helpers/normalization/normalizeUser';
 import mapUserToModel from '../helpers/normalization/mapToModelUser';
 import useUsers from '../hooks/useUsers';
 import initialUserForm from '../helpers/initialForms/initialUserForm';
-import UserForm from '../components/UserForm';
 
 const EditUserPage = () => {
-	// const { user } = useParams();
-	// console.log(user._id);
+	const { userId } = useParams();
 	const {
-		handleGetUsers,
-		handleUpdateUser,
 		handleGetUser,
+		handleUpdateUser,
 		value: { user },
 	} = useUsers();
-	const { userId } = useUser();
-	// console.log(user);
-	const navigate = useNavigate();
 
-	// console.log(user.id);
-	useEffect(() => {
-		handleGetUsers(user._id).then((data) => {
-			if (user._id !== data._id)
-				return navigate(`${ROUTES.EDIT_USER}/${user._id}`);
-			const modeledUser = mapUserToModel(data);
-			rest.setData(modeledUser);
-		});
-	}, []);
+	const navigate = useNavigate();
 
 	const { value, ...rest } = useForm(initialUserForm, userSchema, () =>
 		handleUpdateUser(userId, {
@@ -49,6 +31,14 @@ const EditUserPage = () => {
 			user_id: user.user_id,
 		})
 	);
+
+	useEffect(() => {
+		handleGetUser(userId).then((data) => {
+			if (userId !== user._id) return navigate(ROUTES.CARDS);
+			const modeledUser = mapUserToModel(data);
+			rest.setData(modeledUser);
+		});
+	}, []);
 
 	if (!user) return <Navigate replace to={ROUTES.CARDS} />;
 
@@ -110,6 +100,7 @@ const EditUserPage = () => {
 					onChange={rest.handleChange}
 					data={value.data}
 					sm={6}
+					disabled={false}
 				/>
 				<Input
 					name="password"
@@ -119,7 +110,6 @@ const EditUserPage = () => {
 					onChange={rest.handleChange}
 					data={value.data}
 					sm={6}
-					// required={false}
 				/>
 				<Input
 					name="imageUrl"
@@ -201,11 +191,7 @@ const EditUserPage = () => {
 						}
 						name="isBusiness"
 						control={
-							<Checkbox
-								// value={!!value.data.isBusiness}
-								checked={!!value.data.isBusiness}
-								color="primary"
-							/>
+							<Checkbox checked={!!value.data.isBusiness} color="primary" />
 						}
 						labelPlacement="start"
 						label="change business status"

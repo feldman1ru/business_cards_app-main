@@ -39,15 +39,8 @@ const MenuBar = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
 					</NavBarLink>
 					<NavBarLink to={ROUTES.ABOUT}>
 						<Button color="inherit">
-							<Typography>WWAbout</Typography>
+							<Typography>About</Typography>
 						</Button>
-
-						{/* <MenuItem
-							sx={{ display: { xs: 'block', md: 'none' } }}
-							onClick={onCloseMenu}
-						>
-							About
-						</MenuItem> */}
 					</NavBarLink>
 					<NavBarLink to={ROUTES.SIGNUP}>
 						<MenuItem
@@ -64,7 +57,7 @@ const MenuBar = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
 				<Box>
 					<MenuItem onClick={handleLogout}>Logout</MenuItem>
 
-					<NavBarLink to={ROUTES.USER_PROFILE}>
+					<NavBarLink to={`${ROUTES.USER_PROFILE}/${user._id}`}>
 						<MenuItem onClick={onCloseMenu}>Profile</MenuItem>
 					</NavBarLink>
 					<NavBarLink to={`${ROUTES.EDIT_USER}/${user._id}`}>

@@ -17,12 +17,9 @@ import { useEffect } from 'react';
 const RightNavBar = () => {
 	const [anchorEl, setAnchoeEl] = useState(null);
 	const [isMenuOpen, setMenuStatus] = useState(false);
-
 	const theme = useMuiTheme();
 	const screenSize = useMediaQuery(theme.breakpoints.up('md'));
-	const noop = () => {};
 	const { user } = useUser();
-
 	const handleCloseMenu = () => {
 		setMenuStatus(false);
 		setAnchoeEl(null);

@@ -23,33 +23,45 @@ export const singup = async (normalizedUser) => {
 export const getUser = async (userId) => {
 	try {
 		const { data } = await axios.get(`${apiUrl}/users/${userId}`);
-		console.log(data);
 		return data;
 	} catch (error) {
-		console.log(error);
 		return Promise.reject(error.message);
 	}
 };
-
-export const getUsers = async (userId) => {
+export const getUserFromServer = async (userId) => {
 	try {
 		const { data } = await axios.get(`${apiUrl}/users/${userId}`);
 		return data;
 	} catch (error) {
-		console.log(error);
+		return Promise.reject(error.message);
+	}
+};
+
+export const getUsers = async () => {
+	try {
+		const { data } = await axios.get(`${apiUrl}/users`);
+		return data;
+	} catch (error) {
 		return Promise.reject(error.message);
 	}
 };
 
 export const editUser = async (userId, normalaizeUser) => {
 	try {
-		const { data } = await axios.put(
+		const { data } = await axios.patch(
 			`${apiUrl}/users/${userId}`,
 			normalaizeUser
 		);
 		return data;
 	} catch (error) {
-		console.log(error);
+		return Promise.reject(error.message);
+	}
+};
+export const editUsers = async (userId) => {
+	try {
+		const { data } = await axios.put(`${apiUrl}/users/${userId}`);
+		return data;
+	} catch (error) {
 		return Promise.reject(error.message);
 	}
 };

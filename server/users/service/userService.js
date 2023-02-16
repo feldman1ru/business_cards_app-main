@@ -28,7 +28,6 @@ const registerUser = async (rawUser) => {
 };
 
 const loginUser = async (user) => {
-	console.log(user);
 	const { error } = validateLogin(user);
 	if (error) return handleJoiError(error);
 
@@ -50,10 +49,8 @@ const getUsers = async () => {
 };
 
 const getUser = async (userId) => {
-	console.log(userId);
 	try {
 		const user = await findOne(userId);
-		console.log(user);
 		return Promise.resolve(user);
 	} catch (error) {
 		return Promise.reject(error);

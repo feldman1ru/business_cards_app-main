@@ -35,7 +35,6 @@ const signupSchema = {
 	street: Joi.string().min(2).max(256).required(),
 	houseNumber: Joi.number().required(),
 	zip: Joi.number(),
-	// isBusiness: Joi.boolean().required(),
 	isBusiness: Joi.boolean(),
 };
 

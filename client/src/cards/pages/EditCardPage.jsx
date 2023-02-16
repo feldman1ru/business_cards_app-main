@@ -15,14 +15,12 @@ import normalizeCard from './../helpers/normalization/normalizeCard';
 
 const EditCardPage = () => {
 	const { cardId } = useParams();
-	console.log(cardId);
 	const {
 		handleUpdateCard,
 		handleGetCard,
 		value: { card },
 	} = useCards();
 	const { user } = useUser();
-	console.log(user);
 	const navigate = useNavigate();
 	const { value, ...rest } = useForm(initialCardForm, cardSchema, () =>
 		handleUpdateCard(card._id, {
@@ -34,12 +32,9 @@ const EditCardPage = () => {
 
 	useEffect(() => {
 		handleGetCard(cardId).then((data) => {
-			console.log(data);
-			console.log(cardId);
 			if (user._id !== data.user_id) return navigate(ROUTES.CARDS);
 			const modeledCard = mapCardToModel(data);
 			rest.setData(modeledCard);
-			console.log(modeledCard);
 		});
 	}, []);
 

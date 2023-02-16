@@ -2,11 +2,10 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Logo from '../Logo/Logo';
 import LogoIcon from '../Logo/LogoIcon';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import NavItem from '../../../../routes/NavItem';
 import ROUTES from '../../../../routes/routesModel';
 import { useUser } from '../../../../users/providers/UserProvider';
+import { AppBar, Toolbar } from '@mui/material';
 
 const LeftNavBar = () => {
 	const { user } = useUser();
@@ -22,7 +21,10 @@ const LeftNavBar = () => {
 					<NavItem to={ROUTES.MY_CARDS} label="My Cards" />
 				)}
 				{user && user.isAdmin && (
-					<NavItem to={ROUTES.SANDBOX} label="Sandbox" />
+					<>
+						<NavItem to={ROUTES.SANDBOX} label="Sandbox" />
+						<NavItem to={ROUTES.CRM} label="Crm" />
+					</>
 				)}
 			</Box>
 		</Box>

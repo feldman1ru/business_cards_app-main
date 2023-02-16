@@ -96,7 +96,6 @@ router.put('/:id', auth, async (req, res) => {
 
 		user = normalizeUser(user);
 		user = await updateUser(id, user);
-		console.log(user);
 		return res.send(user);
 	} catch (error) {
 		return handleError(res, error.status || 500, error);
@@ -109,7 +108,6 @@ router.patch('/:id', async (req, res) => {
 		const user = await changeUserBusinessStatus(id);
 		return res.send(user);
 	} catch (error) {
-		console.log(error);
 		return handleError(res, error.status || 500, error.message);
 	}
 });

@@ -17,6 +17,7 @@ const ROUTES = {
 	MUI_SANDBOX: '/mui-sendbox',
 	PROP_TYPES: '/prop-types',
 	SET_POST: '/set-post',
+	CRM: '/crm',
 };
 
 export default ROUTES;
