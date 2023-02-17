@@ -27,7 +27,7 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		handleGetUser(userId).then((data) => {
-			if (userId !== user._id) return navigate(ROUTES.CARDS);
+			if (userId !== user._id) return navigate(ROUTES.USER_PROFILE);
 			const modeledUser = mapUserToModel(data);
 			rest.setData(modeledUser);
 		});

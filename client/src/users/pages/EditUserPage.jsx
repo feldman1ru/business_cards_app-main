@@ -110,6 +110,7 @@ const EditUserPage = () => {
 					onChange={rest.handleChange}
 					data={value.data}
 					sm={6}
+					// disabled={true}
 				/>
 				<Input
 					name="imageUrl"
