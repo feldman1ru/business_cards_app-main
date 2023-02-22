@@ -106,25 +106,25 @@ const { generateAuthToken } = require('../../auth/Providers/jwt');
 // 	return Promise.resolve('card update not in mongodb');
 // };
 
-// const changeUserBusinessStatus = async (userId) => {
-// 	if (DB === 'MONGODB') {
-// 		try {
-// 			const pipeline = [{ $set: { isBusiness: { $not: '$isBusiness' } } }];
-// 			let user = await User.findByIdAndUpdate(userId, pipeline, { new: true });
-// 			if (!user)
-// 				throw new Error(
-// 					'Could not update this user isBusiness status because a user with this ID cannot be found in the database'
-// 				);
-// 			user = user.toObject();
-// 			user = omit(user, ['password', 'isAdmin', '__v']);
-// 			return Promise.resolve(user);
-// 		} catch (error) {
-// 			error.status = 400;
-// 			return handleBadRequest('Mongoose', error);
-// 		}
-// 	}
-// 	return Promise.resolve('Card Updated!');
-// };
+const changeUserBusinessStatus = async (userId) => {
+	if (DB === 'MONGODB') {
+		try {
+			const pipeline = [{ $set: { isBusiness: { $not: '$isBusiness' } } }];
+			let user = await User.findByIdAndUpdate(userId, pipeline, { new: true });
+			if (!user)
+				throw new Error(
+					'Could not update this user isBusiness status because a user with this ID cannot be found in the database'
+				);
+			user = user.toObject();
+			user = omit(user, ['password', 'isAdmin', '__v']);
+			return Promise.resolve(user);
+		} catch (error) {
+			error.status = 400;
+			return handleBadRequest('Mongoose', error);
+		}
+	}
+	return Promise.resolve('Card Updated!');
+};
 
 // const deleteUser = async (userId) => {
 // 	if (DB === 'MONGODB') {
@@ -222,17 +222,17 @@ const updateUser = async (userId, normalizedUser) => {
 	return Promise.resolve('card update not in mongodb');
 };
 
-const changeUserBusinessStatus = async (userId) => {
-	if (DB === 'MONGODB') {
-		try {
-			return Promise.resolve(`user no. ${userId} change his business status!`);
-		} catch (error) {
-			error.status = 400;
-			return Promise.reject(error);
-		}
-	}
-	return Promise.resolve('card liked not in mongodb');
-};
+// const changeUserBusinessStatus = async (userId) => {
+// 	if (DB === 'MONGODB') {
+// 		try {
+// 			return Promise.resolve(`user no. ${userId} change his business status!`);
+// 		} catch (error) {
+// 			error.status = 400;
+// 			return Promise.reject(error);
+// 		}
+// 	}
+// 	return Promise.resolve('card liked not in mongodb');
+// };
 
 const deleteUser = async (userId) => {
 	if (DB === 'MONGODB') {

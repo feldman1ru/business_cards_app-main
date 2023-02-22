@@ -9,11 +9,11 @@ import { AppBar, Toolbar } from '@mui/material';
 
 const LeftNavBar = () => {
 	const { user } = useUser();
+	console.log(user);
 	return (
 		<Box>
 			<LogoIcon />
 			<Logo />
-
 			<Box sx={{ display: { xs: 'none', md: 'inline-flex' } }}>
 				<NavItem to={ROUTES.ABOUT} label="about" />
 				{user && <NavItem to={ROUTES.FAV_CARDS} label="Fav Cards" />}

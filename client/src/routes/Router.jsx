@@ -67,7 +67,7 @@ const Router = () => {
 				path={`${ROUTES.USER_PROFILE}/:userId`}
 				element={<UserProfile />}
 			/>
-			<Route path={ROUTES.CRM} element={<Crm />} />
+			<Route path={`${ROUTES.CRM}`} element={<Crm />} />
 			<Route path={ROUTES.SANDBOX} element={<Sandbox />}>
 				<Route path="logic" element={<CompLogic />} />
 				<Route path="use-ref" element={<UseRefSandbox />}>
