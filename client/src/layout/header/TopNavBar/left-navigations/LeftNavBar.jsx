@@ -9,7 +9,6 @@ import { AppBar, Toolbar } from '@mui/material';
 
 const LeftNavBar = () => {
 	const { user } = useUser();
-	console.log(user);
 	return (
 		<Box>
 			<LogoIcon />
@@ -21,11 +20,9 @@ const LeftNavBar = () => {
 					<NavItem to={ROUTES.MY_CARDS} label="My Cards" />
 				)}
 				{user && user.isAdmin && (
-					<>
-						<NavItem to={ROUTES.SANDBOX} label="Sandbox" />
-						<NavItem to={ROUTES.CRM} label="Crm" />
-					</>
+					<NavItem to={ROUTES.SANDBOX} label="Sandbox" />
 				)}
+				{user && user.isAdmin && <NavItem to={ROUTES.CRM} label="CRM" />}
 			</Box>
 		</Box>
 	);

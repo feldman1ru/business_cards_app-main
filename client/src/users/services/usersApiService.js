@@ -65,3 +65,24 @@ export const editUsers = async (userId) => {
 		return Promise.reject(error.message);
 	}
 };
+
+export const deleteUser = async (userId) => {
+	try {
+		const { data } = await axios.delete(`${apiUrl}/users/${userId}`);
+		return data;
+	} catch (error) {
+		return Promise.reject(error.message);
+	}
+};
+
+export const changeBusinessStatus = async (userId, normalaizedUser) => {
+	try {
+		const { data } = await axios.patch(
+			`${apiUrl}/users/${userId}`,
+			normalaizedUser
+		);
+		return data;
+	} catch (error) {
+		return Promise.reject(error.message);
+	}
+};

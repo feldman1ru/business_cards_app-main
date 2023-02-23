@@ -8,6 +8,8 @@ import {
 	singup,
 	getUserFromServer,
 	editUsers,
+	deleteUser,
+	changeBusinessStatus,
 } from '../services/usersApiService';
 import {
 	getUser,
@@ -87,13 +89,14 @@ const useUsers = () => {
 
 	const handleGetUsers = useCallback(async () => {
 		try {
+			setisLoading(true);
 			const users = await getUsers();
-			requestStatus(false, null, null, users);
+			requestStatus(false, null, users, user);
 			return users;
 		} catch (error) {
 			requestStatus(false, error, null);
 		}
-	}, []);
+	}, [requestStatus, user]);
 
 	const handleUpdateUser = useCallback(
 		async (userId, userFromClient) => {
@@ -121,6 +124,33 @@ const useUsers = () => {
 		[snack]
 	);
 
+	const handleDeleteUser = useCallback(
+		async (userId) => {
+			try {
+				setisLoading(true);
+				await deleteUser(userId);
+				snack('success', 'The business card has been successfully deleted');
+			} catch (error) {
+				requestStatus(false, error, null);
+			}
+		},
+		[snack]
+	);
+
+	const handleChangeBusinessStatus = useCallback(
+		async (userId, userFromClient) => {
+			try {
+				setisLoading(true);
+				const user = await changeBusinessStatus(userId, userFromClient);
+				requestStatus(false, null, users, user);
+				snack('success', 'The business user has been successfully updated');
+			} catch (error) {
+				requestStatus(false, error, null);
+			}
+		},
+		[requestStatus, snack, users]
+	);
+
 	const value = useMemo(
 		() => ({ isLoading, error, user, users }),
 		[isLoading, error, user, users]
@@ -136,6 +166,8 @@ const useUsers = () => {
 		handleGetUsers,
 		handleUpdateAllUser,
 		getUserFromServer,
+		handleDeleteUser,
+		handleChangeBusinessStatus,
 	};
 };
 
