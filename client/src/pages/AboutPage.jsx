@@ -21,12 +21,7 @@ const AboutPage = () => {
 					<img src="/assets/images/regularCard.jpg" alt="card" width="80%" />
 				</Grid>
 				<Grid item xs={12} md={8} alignSelf="center" sx={{ fontSize: '20px' }}>
-					<Typography
-						sx={{ textAlign: 'center' }}
-						item
-						variant="h2"
-						color="initial"
-					>
+					<Typography sx={{ textAlign: 'center' }} variant="h2" color="initial">
 						Regular
 					</Typography>
 					After you register for free on the site and choose the option not to
