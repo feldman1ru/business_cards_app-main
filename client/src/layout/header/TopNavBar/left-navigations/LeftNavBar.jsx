@@ -5,7 +5,6 @@ import LogoIcon from '../Logo/LogoIcon';
 import NavItem from '../../../../routes/NavItem';
 import ROUTES from '../../../../routes/routesModel';
 import { useUser } from '../../../../users/providers/UserProvider';
-import { AppBar, Toolbar } from '@mui/material';
 
 const LeftNavBar = () => {
 	const { user } = useUser();

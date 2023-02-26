@@ -14,6 +14,8 @@ import normalizeUser from '../helpers/normalization/normalizeUser';
 import mapUserToModel from '../helpers/normalization/mapToModelUser';
 import useUsers from '../hooks/useUsers';
 import initialUserForm from '../helpers/initialForms/initialUserForm';
+import Spinner from '../../components/Spinner';
+import Error from '../../components/Error';
 
 const EditUserPage = () => {
 	const { userId } = useParams();
@@ -32,15 +34,14 @@ const EditUserPage = () => {
 		})
 	);
 
+	const { error, isLoading } = value;
 	useEffect(() => {
 		handleGetUser(userId).then((data) => {
-			if (userId !== user._id) return navigate(ROUTES.CARDS);
+			if (!userId) return navigate(ROUTES.CARDS);
 			const modeledUser = mapUserToModel(data);
 			rest.setData(modeledUser);
 		});
 	}, []);
-
-	if (!user) return <Navigate replace to={ROUTES.CARDS} />;
 
 	return (
 		<Container
@@ -51,6 +52,8 @@ const EditUserPage = () => {
 				alignItems: 'center',
 			}}
 		>
+			{isLoading && <Spinner />}
+			{error && <Error errorMessage={error} />}
 			<Form
 				onSubmit={rest.onSubmit}
 				onReset={rest.handleReset}
@@ -110,7 +113,6 @@ const EditUserPage = () => {
 					onChange={rest.handleChange}
 					data={value.data}
 					sm={6}
-					// disabled={true}
 				/>
 				<Input
 					name="imageUrl"

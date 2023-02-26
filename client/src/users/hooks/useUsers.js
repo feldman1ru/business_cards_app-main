@@ -7,7 +7,6 @@ import {
 	login,
 	singup,
 	getUserFromServer,
-	editUsers,
 	deleteUser,
 	changeBusinessStatus,
 } from '../services/usersApiService';
